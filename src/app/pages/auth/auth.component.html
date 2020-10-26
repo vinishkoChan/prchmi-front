@@ -1,0 +1,37 @@
+<div class="auth-container">
+  <div class="form-container">
+    <ul nz-menu nzMode="horizontal" class="menu">
+      <li nz-menu-item>
+        <a (click)="setSignIn()"> Sign in </a>
+      </li>
+      <li nz-menu-item>
+        <a (click)="setSignIUp()"> Sign up </a>
+      </li>
+    </ul>
+    <h1 class="title">{{ title }}</h1>
+    <form [formGroup]="signUpForm">
+      <div class="form-group">
+        <input formControlName="email" placeholder="Email" nz-input required />
+      </div>
+      <div class="form-group">
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="Password"
+          nz-input
+          required
+        />
+      </div>
+      <div *ngIf="!isSignIn" class="form-group">
+        <input
+          type="password"
+          formControlName="confirmPassword"
+          placeholder="Confirm password"
+          nz-input
+          required
+        />
+      </div>
+      <button type="submit" nz-button nzType="primary">Sign up</button>
+    </form>
+  </div>
+</div>
