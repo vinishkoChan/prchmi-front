@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NzTableSortOrder, NzTableSortFn } from 'ng-zorro-antd/table';
 
 interface Column {
@@ -69,7 +70,11 @@ export class HomeComponent implements OnInit {
     },
   ];
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
+
+  editProgram(): void {
+    this.router.navigate(['/program']);
+  }
 }

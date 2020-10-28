@@ -15,17 +15,14 @@ import {
   DeleteOutline,
   EyeOutline,
   EditOutline,
+  PlusOutline,
 } from '@ant-design/icons-angular/icons';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { ManageProgramComponent } from './pages/home/components/manage.program/manage.program.component';
+import { ProgramComponent } from './pages/program/program.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AuthComponent,
-    HomeComponent,
-    ManageProgramComponent,
-  ],
+  declarations: [AppComponent, AuthComponent, HomeComponent, ProgramComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -37,7 +34,13 @@ import { ManageProgramComponent } from './pages/home/components/manage.program/m
     ReactiveFormsModule,
     NzTableModule,
     NzDividerModule,
-    NzIconModule.forChild([DeleteOutline, EyeOutline, EditOutline]),
+    DragDropModule,
+    NzIconModule.forChild([
+      DeleteOutline,
+      EyeOutline,
+      EditOutline,
+      PlusOutline,
+    ]),
   ],
   providers: [],
   bootstrap: [AppComponent],

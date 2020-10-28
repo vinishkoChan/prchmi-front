@@ -27,13 +27,13 @@
           <a
             ><i
               nz-icon
-              [nzType]="'delete'"
+              [nzType]="'edit'"
               [nzTheme]="'outline'"
-              class="icon"
+              (click)="editProgram()"
             ></i
           ></a>
           <nz-divider [nzType]="'vertical'"></nz-divider>
-          <a><i nz-icon [nzType]="'edit'" [nzTheme]="'outline'"></i></a>
+          <a><i nz-icon [nzType]="'delete'" [nzTheme]="'outline'"></i></a>
         </td>
       </tr>
     </tbody>
