@@ -9,7 +9,7 @@
       </li>
     </ul>
     <h1 class="title">{{ title }}</h1>
-    <form [formGroup]="signUpForm">
+    <form [formGroup]="authForm" (ngSubmit)="onSubmit(authForm.value)">
       <div class="form-group">
         <input formControlName="email" placeholder="Email" nz-input required />
       </div>

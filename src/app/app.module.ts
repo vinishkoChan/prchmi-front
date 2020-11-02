@@ -20,6 +20,10 @@ import {
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { ProgramComponent } from './pages/program/program.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { StoreModule } from '@ngrx/store';
+import { authReducer } from './store/reducers/auth.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent, AuthComponent, HomeComponent, ProgramComponent],
@@ -41,6 +45,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
       EditOutline,
       PlusOutline,
     ]),
+    StoreModule.forRoot({ users: authReducer }, {}),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
   ],
   providers: [],
   bootstrap: [AppComponent],
