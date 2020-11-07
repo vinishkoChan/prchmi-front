@@ -1,0 +1,25 @@
+<div class="container">
+  <nz-table #programList [nzData]="programs" nzTableLayout="fixed" class="program-table">
+    <thead class="program-table-head">
+      <tr>
+        <th *ngFor="let column of columns" [nzSortOrder]="column.sortOrder" [nzSortFn]="column.sortFn">
+          {{ column.name }}
+        </th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody class="program-table-body">
+      <tr *ngFor="let program of programList.data">
+        <td>{{ program.student }}</td>
+        <td>{{ program.name }}</td>
+        <td>{{ program.language }}</td>
+        <td>{{ program.created_at }}</td>
+        <td>
+          <a><i nz-icon [nzType]="'edit'" [nzTheme]="'outline'" (click)="editProgram()"></i></a>
+          <nz-divider [nzType]="'vertical'"></nz-divider>
+          <a><i nz-icon [nzType]="'delete'" [nzTheme]="'outline'"></i></a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

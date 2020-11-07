@@ -1,0 +1,9 @@
+<nz-page-header nzBackIcon [nzGhost]="false" class="header">
+  <nz-page-header-title class="title">LStudy</nz-page-header-title>
+  <nz-page-header-subtitle class="title">Eductation managment system</nz-page-header-subtitle>
+  <nz-page-header-extra>
+    <div *ngIf="!(auth$ | async)" class="buttons">
+      <button nz-button nzType="primary">Log Out</button>
+    </div>
+  </nz-page-header-extra>
+</nz-page-header>

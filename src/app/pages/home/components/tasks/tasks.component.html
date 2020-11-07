@@ -1,0 +1,40 @@
+<div class="container" cdkDropListGroup>
+  <div class="example-container">
+    <div class="title">
+      <div>To do</div>
+      <a><i nz-icon [nzType]="'plus'" [nzTheme]="'outline'" style="font-size: 20px"></i></a>
+    </div>
+
+    <div cdkDropList [cdkDropListData]="todo" class="example-list" (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let item of todo" cdkDrag>
+        {{ item }}
+      </div>
+    </div>
+  </div>
+
+  <div class="example-container">
+    <div class="title">
+      <div>In Progress</div>
+      <a><i nz-icon [nzType]="'plus'" [nzTheme]="'outline'" style="font-size: 20px"></i></a>
+    </div>
+
+    <div cdkDropList [cdkDropListData]="inProgress" class="example-list" (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let item of inProgress" cdkDrag>
+        {{ item }}
+      </div>
+    </div>
+  </div>
+
+  <div class="example-container">
+    <div class="title">
+      <div>Done</div>
+      <a><i nz-icon [nzType]="'plus'" [nzTheme]="'outline'" style="font-size: 20px"></i></a>
+    </div>
+
+    <div cdkDropList [cdkDropListData]="done" class="example-list" (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let item of done" cdkDrag>
+        {{ item }}
+      </div>
+    </div>
+  </div>
+</div>
