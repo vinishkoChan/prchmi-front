@@ -5,7 +5,7 @@
         <th *ngFor="let column of columns" [nzSortOrder]="column.sortOrder" [nzSortFn]="column.sortFn">
           {{ column.name }}
         </th>
-        <th>Action</th>
+        <th class="action">Action</th>
       </tr>
     </thead>
     <tbody class="program-table-body">
@@ -14,10 +14,13 @@
         <td>{{ program.name }}</td>
         <td>{{ program.language }}</td>
         <td>{{ program.created_at }}</td>
-        <td>
-          <a><i nz-icon [nzType]="'edit'" [nzTheme]="'outline'" (click)="editProgram()"></i></a>
-          <nz-divider [nzType]="'vertical'"></nz-divider>
-          <a><i nz-icon [nzType]="'delete'" [nzTheme]="'outline'"></i></a>
+        <td class="action">
+          <div class="teacher" *ngIf="isTeacher">
+            <a><i nz-icon [nzType]="'edit'" [nzTheme]="'outline'" (click)="editProgram()"></i></a>
+            <a style="width: 10px"></a>
+            <a><i nz-icon [nzType]="'delete'" [nzTheme]="'outline'"></i></a>
+          </div>
+          <a *ngIf="!isTeacher"><i nz-icon [nzType]="'eye'" [nzTheme]="'outline'"></i></a>
         </td>
       </tr>
     </tbody>

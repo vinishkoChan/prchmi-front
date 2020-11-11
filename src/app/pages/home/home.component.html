@@ -1,14 +1,20 @@
 <nz-layout style="height: 100%">
   <nz-layout>
-    <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
-      <div style="width: 50px">
-        <i
-          class="trigger"
-          nz-icon
-          [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-          (click)="isCollapsed = !isCollapsed"
-        ></i>
-      </div>
+    <nz-sider nzCollapsible nzBreakpoint="asd" [nzCollapsedWidth]="0">
+      <ul nz-menu nzTheme="dark" nzMode="inline">
+        <li nz-menu-item routerLink="profile">
+          <i nz-icon nzType="user"></i>
+          <span>Profile</span>
+        </li>
+        <li nz-menu-item routerLink="programs">
+          <i nz-icon nzType="video-camera"></i>
+          <span>Programs</span>
+        </li>
+        <li nz-menu-item routerLink="tasks">
+          <i nz-icon nzType="upload"></i>
+          <span>Tasks</span>
+        </li>
+      </ul>
     </nz-sider>
 
     <nz-content>

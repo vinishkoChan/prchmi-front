@@ -17,6 +17,15 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { HeaderComponent } from './components/header/header.component';
 import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
+import { NZ_ICONS } from 'ng-zorro-antd/icon';
+import * as AllIcons from '@ant-design/icons-angular/icons';
+
+import { IconDefinition } from '@ant-design/icons-angular';
+
+const antDesignIcons = AllIcons as {
+  [key: string]: IconDefinition;
+};
+const icons: IconDefinition[] = Object.keys(antDesignIcons).map((key) => antDesignIcons[key]);
 
 @NgModule({
   declarations: [AppComponent, AuthComponent, HeaderComponent],
@@ -35,7 +44,7 @@ import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
     StoreModule.forRoot({ users: authReducer }, {}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
   ],
-  providers: [],
+  providers: [{ provide: NZ_ICONS, useValue: icons }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

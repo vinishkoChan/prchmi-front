@@ -20,7 +20,7 @@ interface Program {
   templateUrl: './programs.component.html',
   styleUrls: ['./programs.component.css'],
 })
-export class ProgramsComponent {
+export class ProgramsComponent implements OnInit {
   columns: Column[] = [
     {
       name: 'Student',
@@ -70,7 +70,13 @@ export class ProgramsComponent {
     },
   ];
 
+  isTeacher = true;
+
   constructor(private router: Router) {}
+
+  ngOnInit(): void {
+    this.isTeacher = localStorage.getItem('role') === 'teacher';
+  }
 
   editProgram(): void {
     this.router.navigate(['/task']);
