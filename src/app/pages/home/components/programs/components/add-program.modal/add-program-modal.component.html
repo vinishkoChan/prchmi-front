@@ -1,0 +1,43 @@
+<button nz-button nzType="primary" (click)="showModal()">
+  <i nz-icon nzType="plus"></i>
+  <span> New program</span>
+</button>
+
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="New program"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  [nzOkLoading]="isOkLoading"
+  nzOkText="Ok"
+  nzCancelText="Canсel"
+>
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value)">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Program title</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback nzValidatingTip="Validating..." [nzErrorTip]="userErrorTpl">
+        <input nz-input formControlName="userName" placeholder="Title" />
+        <ng-template #userErrorTpl let-control>
+          <ng-container *ngIf="control.hasError('required')"> Please input your username! </ng-container>
+          <ng-container *ngIf="control.hasError('duplicated')"> The username is redundant! </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Language</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="emailErrorTpl">
+        <input nz-input formControlName="email" placeholder="Language" />
+        <ng-template #emailErrorTpl let-control>
+          <ng-container *ngIf="control.hasError('email')"> The input is not valid E-mail! </ng-container>
+          <ng-container *ngIf="control.hasError('required')"> Please input your E-mail! </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Student</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback nzErrorTip="Please input your password!">
+        <input nz-input formControlName="password" placeholder="Select student" />
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>

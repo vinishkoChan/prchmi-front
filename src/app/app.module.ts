@@ -21,6 +21,7 @@ import { NZ_ICONS } from 'ng-zorro-antd/icon';
 import * as AllIcons from '@ant-design/icons-angular/icons';
 
 import { IconDefinition } from '@ant-design/icons-angular';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const antDesignIcons = AllIcons as {
   [key: string]: IconDefinition;
@@ -30,6 +31,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map((key) => antDesi
 @NgModule({
   declarations: [AppComponent, AuthComponent, HeaderComponent],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
     CommonModule,

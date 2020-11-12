@@ -8,6 +8,13 @@
   align-items: center;
 }
 
+.show-modal {
+  display: flex;
+  justify-content: flex-end;
+
+  width: 100%;
+}
+
 .program-table {
   margin: 5px;
 }

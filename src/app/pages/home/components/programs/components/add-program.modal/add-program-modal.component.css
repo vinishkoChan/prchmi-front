@@ -1,0 +1,12 @@
+nz-form-item {
+  display: flex;
+  /* justify-content: space-between; */
+}
+
+label {
+  color: white !important;
+}
+
+/* input {
+  background-color: #4c036e;
+} */
