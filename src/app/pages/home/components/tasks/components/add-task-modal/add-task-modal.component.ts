@@ -1,38 +1,38 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, ValidationErrors, Validators } from '@angular/forms';
+import { FormGroup, FormControl, ValidationErrors, FormBuilder, Validators } from '@angular/forms';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { Observable, Observer } from 'rxjs';
-import { IProgram } from 'src/app/shared/interfaces/program.interface';
-import { ProgramService } from 'src/app/shared/services/program.service';
+import { TaskService } from 'src/app/shared/services/task.service';
 
 @Component({
-  selector: 'app-add-program-modal',
-  templateUrl: './add-program-modal.component.html',
-  styleUrls: ['./add-program-modal.component.css'],
+  selector: 'app-add-task-modal',
+  templateUrl: './add-task-modal.component.html',
+  styleUrls: ['./add-task-modal.component.css'],
 })
-export class AddProgramModalComponent implements OnInit {
+export class AddTaskModalComponent implements OnInit {
   isVisible = false;
   isOkLoading = false;
   geniralInfoGroup: FormGroup;
   @Input() isEdit = false;
-  title = 'New Program';
-  pt: string;
+  @Input() pt = ' ';
+  @Input() type = '';
+  title = 'New Task';
 
   validateForm: FormGroup;
 
-  submitForm(value: { lang: string; progTitle: string; stud: string }): void {
+  ngOnInit() {
+    this.title = this.isEdit ? 'Edit Task' : this.title;
+  }
+
+  submitForm(value: { name: string; description: string }): void {
     for (const key in this.validateForm.controls) {
       this.validateForm.controls[key].markAsDirty();
       this.validateForm.controls[key].updateValueAndValidity();
     }
-    const data: IProgram = {
-      name: value.progTitle,
-      language: value.lang,
-      student: value.stud,
-      teacherId: 1,
-    };
+    console.log(this.type);
     if (this.isEdit) {
-      this.programService.editProgram(this.pt, data);
-    } else this.programService.addProgram(data);
+      this.taskService.editTask(this.type, this.pt, value);
+    } else this.taskService.addTask(this.type, value);
   }
 
   resetForm(): void {
@@ -41,6 +41,10 @@ export class AddProgramModalComponent implements OnInit {
       this.validateForm.controls[key].markAsPristine();
       this.validateForm.controls[key].updateValueAndValidity();
     }
+  }
+
+  validateConfirmPassword(): void {
+    setTimeout(() => this.validateForm.controls.confirm.updateValueAndValidity());
   }
 
   userNameAsyncValidator = (control: FormControl) =>
@@ -53,7 +57,7 @@ export class AddProgramModalComponent implements OnInit {
           observer.next(null);
         }
         observer.complete();
-      }, 1000);
+      }, 0);
     });
 
   confirmValidator = (control: FormControl): { [s: string]: boolean } => {
@@ -65,37 +69,42 @@ export class AddProgramModalComponent implements OnInit {
     return {};
   };
 
-  constructor(private fb: FormBuilder, private programService: ProgramService) {
+  constructor(private fb: FormBuilder, private modal: NzModalService, private taskService: TaskService) {
     this.validateForm = this.fb.group({
-      progTitle: ['', [Validators.required], [this.userNameAsyncValidator]],
-      lang: ['', [Validators.required]],
-      stud: ['', [Validators.required]],
+      name: ['', [Validators.required], [this.userNameAsyncValidator]],
+      description: ['', [Validators.required]],
     });
   }
-  ngOnInit(): void {
-    this.title = this.isEdit ? 'Edit Program' : this.title;
-  }
 
-  showModal(data?: IProgram): void {
+  showModal(type?, data?): void {
     this.isVisible = true;
     if (this.isEdit) {
-      this.validateForm.controls['lang'].setValue(data.language);
-      this.validateForm.controls['progTitle'].setValue(data.name);
-      this.validateForm.controls['stud'].setValue(data.student);
+      this.validateForm.controls['name'].setValue(data.name);
+      this.validateForm.controls['description'].setValue(data.description);
       this.pt = data.name;
+      this.type = type;
     }
   }
 
-  handleOk(value: { lang: string; progTitle: string; stud: string }): void {
+  handleOk(value: { name: string; description: string }): void {
     this.isOkLoading = true;
     setTimeout(() => {
       this.submitForm(value);
       this.isOkLoading = false;
-    }, 1500);
+    }, 0);
   }
 
   handleCancel(): void {
     this.resetForm();
     this.isVisible = false;
+  }
+
+  handleDelete(): void {
+    this.modal.confirm({
+      nzContent: '<i>Do you Want to delete this program</i>',
+      nzOnOk: () => console.log('OK'),
+      nzOkText: 'Delete',
+      nzCancelText: 'Cancel',
+    });
   }
 }

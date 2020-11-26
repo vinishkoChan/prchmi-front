@@ -1,5 +1,9 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component } from '@angular/core';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { Observable } from 'rxjs';
+import { ITask } from 'src/app/shared/interfaces/task.interface';
+import { TaskService } from 'src/app/shared/services/task.service';
 
 @Component({
   selector: 'app-tasks',
@@ -7,28 +11,23 @@ import { Component } from '@angular/core';
   styleUrls: ['./tasks.component.css'],
 })
 export class TasksComponent {
-  todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
-  inProgress = [
-    'asdasd',
-    'qweqweqweqwe',
-    'cxzczxczcz',
-    'wqe13123123',
-    'cxzczxczcz',
-    'wqe13123123',
-    'cxzczxczcz',
-    'wqe13123123',
-    'cxzczxczcz',
-    'wqe13123123',
-    'cxzczxczcz',
-    'wqe13123123',
-    'cxzczxczcz',
-    'wqe13123123',
-    'cxzczxczcz',
-    'wqe13123123',
-    'cxzczxczcz',
-    'wqe13123123',
-  ];
-  done = ['Get up', 'Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
+  todo: Observable<ITask[]>;
+  inProgress: Observable<ITask[]>;
+  done: Observable<ITask[]>;
+  isMobile = false;
+  isTeacher = false;
+
+  constructor(private modal: NzModalService, private taskService: TaskService) {}
+
+  ngOnInit(): void {
+    this.isTeacher = localStorage.getItem('role') === 'teacher';
+
+    this.isMobile = localStorage.getItem('view') === 'mobile';
+
+    this.todo = this.taskService.$tasksToDo;
+    this.inProgress = this.taskService.$tasksInPr;
+    this.done = this.taskService.$tasksDone;
+  }
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
@@ -36,5 +35,14 @@ export class TasksComponent {
     } else {
       transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
     }
+  }
+
+  showConfirm(type: string, name: string): void {
+    this.modal.confirm({
+      nzContent: '<i>Do you Want to delete this program</i>',
+      nzOnOk: () => this.taskService.deleteTask(type, name),
+      nzOkText: 'Delete',
+      nzCancelText: 'Cancel',
+    });
   }
 }

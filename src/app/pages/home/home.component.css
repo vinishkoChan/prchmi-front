@@ -11,14 +11,19 @@
 }
 
 nz-content {
+  width: 100%;
   background-color: #4c036e;
+}
+
+.ant-layout-content {
+  width: 100%;
 }
 
 .inner-content {
   padding: 24px;
 
   display: flex;
-  height: 100%;
+  width: 100%;
   justify-content: center;
 }
 

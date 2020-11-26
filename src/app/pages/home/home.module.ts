@@ -15,9 +15,19 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { AddTaskModalComponent } from './components/tasks/components/add-task-modal/add-task-modal.component';
+import { InfoTaskModalComponent } from './components/tasks/components/info-task-modal/info-task-modal.component';
 
 @NgModule({
-  declarations: [HomeComponent, ProgramsComponent, TasksComponent, AddProgramModalComponent],
+  declarations: [
+    HomeComponent,
+    ProgramsComponent,
+    TasksComponent,
+    AddProgramModalComponent,
+    AddTaskModalComponent,
+    InfoTaskModalComponent,
+  ],
   imports: [
     CommonModule,
     HomeRoutingModuleModule,
@@ -25,6 +35,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
     NzLayoutModule,
     DragDropModule,
     ReactiveFormsModule,
+    NzMenuModule,
     NzInputModule,
     NzFormModule,
     NzIconModule.forChild([MenuFoldOutline, MenuUnfoldOutline, UserOutline, TeamOutline]),

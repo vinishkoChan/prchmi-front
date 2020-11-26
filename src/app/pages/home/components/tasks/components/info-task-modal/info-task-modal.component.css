@@ -1,0 +1,33 @@
+nz-form-item {
+  display: flex;
+}
+
+label {
+  color: white !important;
+}
+
+.app-contaier {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+}
+
+.title,
+.description {
+  width: 100%;
+  padding-inline-start: 15px;
+
+  background-color: #4c036e;
+  border-radius: 10px;
+}
+
+.title {
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.description {
+  margin-top: 10px;
+}

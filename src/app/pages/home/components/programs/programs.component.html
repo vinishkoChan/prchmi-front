@@ -1,31 +1,64 @@
 <div class="container">
+  <app-add-program-modal #editProgram [isEdit]="true"></app-add-program-modal>
+
   <div class="show-modal">
     <app-add-program-modal></app-add-program-modal>
   </div>
-  <nz-table #programList [nzData]="programs" nzTableLayout="fixed" class="program-table">
+  <nz-table *ngIf="!isMobile" #programList [nzData]="programs" nzTableLayout="fixed" class="program-table">
     <thead class="program-table-head">
       <tr>
         <th *ngFor="let column of columns" [nzSortOrder]="column.sortOrder" [nzSortFn]="column.sortFn">
           {{ column.name }}
         </th>
-        <th class="action">Action</th>
+        <th *ngIf="isTeacher" class="action">Action</th>
       </tr>
     </thead>
     <tbody class="program-table-body">
-      <tr *ngFor="let program of programList.data">
+      <tr *ngFor="let program of programs | async">
         <td>{{ program.student }}</td>
         <td>{{ program.name }}</td>
         <td>{{ program.language }}</td>
         <td>{{ program.created_at }}</td>
-        <td class="action">
+        <td *ngIf="isTeacher" class="action">
           <div class="teacher" *ngIf="isTeacher">
-            <a><i nz-icon [nzType]="'edit'" [nzTheme]="'outline'" (click)="editProgram()"></i></a>
+            <a (click)="editProgram.showModal(program)"><i nz-icon [nzType]="'edit'" [nzTheme]="'outline'"></i></a>
             <a style="width: 10px"></a>
-            <a><i nz-icon [nzType]="'delete'" [nzTheme]="'outline'"></i></a>
+            <a (click)="showConfirm(program.name)"><i nz-icon [nzType]="'delete'" [nzTheme]="'outline'"></i></a>
           </div>
-          <a *ngIf="!isTeacher"><i nz-icon [nzType]="'eye'" [nzTheme]="'outline'"></i></a>
         </td>
       </tr>
     </tbody>
   </nz-table>
+  <!-- <div *ngIf="isMobile" class="app-container">
+    <div *ngFor="let program of programs" class="card">
+      <div class="card-title">
+        {{ program.name | uppercase }}
+        <div *ngIf="isTeacher">
+          <a (click)="editProgram.showModal()"><i nz-icon [nzType]="'edit'" [nzTheme]="'outline'"></i></a>
+          <a style="width: 10px"></a>
+          <a (click)="showConfirm()"><i nz-icon [nzType]="'delete'" [nzTheme]="'outline'"></i></a>
+        </div>
+      </div>
+      <div class="info">
+        <div class="info-column col-1">
+          <div class="row">
+            <div class="title">Student name:</div>
+            <div class="value">
+              {{ program.student }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="title">Language:</div>
+            <div class="value">{{ program.language }}</div>
+          </div>
+          <div class="row">
+            <div class="title">Start date:</div>
+            <div class="value">
+              {{ program.created_at }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
 </div>

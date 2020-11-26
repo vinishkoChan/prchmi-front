@@ -1,0 +1,16 @@
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Task" (nzOnCancel)="handleCancel()">
+  <div class="app-container">
+    <div class="title">Test task title that can be longer than one row can take</div>
+    <div class="description">
+      Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long
+      text Very long text Very long textVery long text Very long text Very long text Very long text Very long text Very
+      long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text
+      Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long
+      text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very
+      long text Very long text Very long text Very long text
+    </div>
+  </div>
+  <div *nzModalFooter>
+    <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
+  </div>
+</nz-modal>

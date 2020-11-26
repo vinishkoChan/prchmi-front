@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzTableSortOrder, NzTableSortFn } from 'ng-zorro-antd/table';
+import { Observable } from 'rxjs';
+import { IProgram } from 'src/app/shared/interfaces/program.interface';
+import { ProgramService } from 'src/app/shared/services/program.service';
 
 interface Column {
   name: string;
@@ -49,36 +53,48 @@ export class ProgramsComponent implements OnInit {
     },
   ];
 
-  programs: Program[] = [
-    {
-      student: 'Vitaly',
-      name: 'First',
-      language: 'English',
-      created_at: '02-20-2015',
-    },
-    {
-      student: 'Brutaly',
-      name: 'Second',
-      language: 'English',
-      created_at: '10-02-2010',
-    },
-    {
-      student: 'Fataly',
-      name: 'Third',
-      language: 'English',
-      created_at: '05-20-2018',
-    },
-  ];
+  // programs: Program[] = [
+  //   {
+  //     student: 'Vitaly',
+  //     name: 'First',
+  //     language: 'English',
+  //     created_at: '02-20-2015',
+  //   },
+  //   {
+  //     student: 'Brutaly',
+  //     name: 'Second',
+  //     language: 'English',
+  //     created_at: '10-02-2010',
+  //   },
+  //   {
+  //     student: 'Fataly',
+  //     name: 'Third',
+  //     language: 'English',
+  //     created_at: '05-20-2018',
+  //   },
+  // ];
+  programs: Observable<IProgram[]>;
 
   isTeacher = true;
+  isMobile = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private modal: NzModalService, private programsService: ProgramService) {}
+
+  showConfirm(name: string): void {
+    this.modal.confirm({
+      nzContent: '<i>Do you Want to delete this program</i>',
+      nzOnOk: () => this.programsService.deleteProgram(name),
+      nzOkText: 'Delete',
+      nzCancelText: 'Cancel',
+    });
+  }
 
   ngOnInit(): void {
     this.isTeacher = localStorage.getItem('role') === 'teacher';
-  }
+    this.columns[0].name = this.isTeacher ? 'Student' : 'Teacher';
 
-  editProgram(): void {
-    this.router.navigate(['/task']);
+    this.isMobile = localStorage.getItem('view') === 'mobile';
+
+    this.programs = this.programsService.$programs;
   }
 }

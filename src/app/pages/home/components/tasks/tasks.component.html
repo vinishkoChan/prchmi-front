@@ -1,13 +1,22 @@
-<div class="container" cdkDropListGroup>
+<app-info-task-modal #infoModal></app-info-task-modal>
+<app-add-task-modal #editTask [isEdit]="true"></app-add-task-modal>
+
+<div *ngIf="!isMobile" class="container" cdkDropListGroup>
   <div class="example-container">
     <div class="title">
       <div>To do</div>
-      <a><i nz-icon [nzType]="'plus'" [nzTheme]="'outline'" style="font-size: 20px"></i></a>
+      <app-add-task-modal [type]="'todo'"></app-add-task-modal>
     </div>
 
     <div cdkDropList [cdkDropListData]="todo" class="example-list" (cdkDropListDropped)="drop($event)">
-      <div class="example-box" *ngFor="let item of todo" cdkDrag>
-        {{ item }}
+      <div class="example-box" *ngFor="let item of todo | async" cdkDrag>
+        {{ item.name }}
+        <a *ngIf="!isTeacher" (click)="infoModal.showModal()"><i nz-icon [nzType]="'eye'" [nzTheme]="'outline'"></i></a>
+        <div *ngIf="isTeacher" class="teacher">
+          <a (click)="editTask.showModal('todo', item)"><i nz-icon [nzType]="'edit'" [nzTheme]="'outline'"></i></a>
+          <a style="width: 10px"></a>
+          <a (click)="showConfirm('todo', item.name)"><i nz-icon [nzType]="'delete'" [nzTheme]="'outline'"></i></a>
+        </div>
       </div>
     </div>
   </div>
@@ -15,12 +24,18 @@
   <div class="example-container">
     <div class="title">
       <div>In Progress</div>
-      <a><i nz-icon [nzType]="'plus'" [nzTheme]="'outline'" style="font-size: 20px"></i></a>
+      <app-add-task-modal [type]="'inpr'"></app-add-task-modal>
     </div>
 
     <div cdkDropList [cdkDropListData]="inProgress" class="example-list" (cdkDropListDropped)="drop($event)">
-      <div class="example-box" *ngFor="let item of inProgress" cdkDrag>
-        {{ item }}
+      <div class="example-box" *ngFor="let item of inProgress | async" cdkDrag>
+        {{ item.name }}
+        <a *ngIf="!isTeacher" (click)="infoModal.showModal()"><i nz-icon [nzType]="'eye'" [nzTheme]="'outline'"></i></a>
+        <div *ngIf="isTeacher" class="teacher">
+          <a (click)="editTask.showModal('inpr', item)"><i nz-icon [nzType]="'edit'" [nzTheme]="'outline'"></i></a>
+          <a style="width: 10px"></a>
+          <a (click)="showConfirm('inpr', item.name)"><i nz-icon [nzType]="'delete'" [nzTheme]="'outline'"></i></a>
+        </div>
       </div>
     </div>
   </div>
@@ -28,13 +43,62 @@
   <div class="example-container">
     <div class="title">
       <div>Done</div>
-      <a><i nz-icon [nzType]="'plus'" [nzTheme]="'outline'" style="font-size: 20px"></i></a>
+      <app-add-task-modal [type]="'done'"></app-add-task-modal>
     </div>
 
     <div cdkDropList [cdkDropListData]="done" class="example-list" (cdkDropListDropped)="drop($event)">
-      <div class="example-box" *ngFor="let item of done" cdkDrag>
-        {{ item }}
+      <div class="example-box" *ngFor="let item of done | async" cdkDrag>
+        {{ item.name }}
+        <a *ngIf="!isTeacher" (click)="infoModal.showModal()" class="eye"
+          ><i nz-icon [nzType]="'eye'" [nzTheme]="'outline'"></i
+        ></a>
+        <div *ngIf="isTeacher" class="teacher">
+          <a (click)="editTask.showModal('done', item)"><i nz-icon [nzType]="'edit'" [nzTheme]="'outline'"></i></a>
+          <a style="width: 10px"></a>
+          <a (click)="showConfirm('done', item.name)"><i nz-icon [nzType]="'delete'" [nzTheme]="'outline'"></i></a>
+        </div>
       </div>
     </div>
   </div>
 </div>
+<ul nz-menu nzMode="inline" *ngIf="isMobile">
+  <li nz-submenu nzTitle="To Do" nzIcon="mail" nzOpen>
+    <ul>
+      <li nz-menu-item *ngFor="let item of todo">
+        {{ item }}
+        <a *ngIf="!isTeacher" (click)="infoModal.showModal()" class="eye"
+          ><i nz-icon [nzType]="'eye'" [nzTheme]="'outline'"></i
+        ></a>
+        <div *ngIf="isTeacher" class="teacher">
+          <a (click)="editTask.showModal()"><i nz-icon [nzType]="'edit'" [nzTheme]="'outline'"></i></a>
+        </div>
+      </li>
+    </ul>
+  </li>
+  <li nz-submenu nzTitle="In Progress" nzIcon="appstore">
+    <ul>
+      <li nz-menu-item *ngFor="let item of inProgress">
+        {{ item }}
+        <a *ngIf="!isTeacher" (click)="infoModal.showModal()" class="eye"
+          ><i nz-icon [nzType]="'eye'" [nzTheme]="'outline'"></i
+        ></a>
+        <div *ngIf="isTeacher" class="teacher">
+          <a (click)="editTask.showModal()"><i nz-icon [nzType]="'edit'" [nzTheme]="'outline'"></i></a>
+        </div>
+      </li>
+    </ul>
+  </li>
+  <li nz-submenu nzTitle="Done" nzIcon="setting">
+    <ul>
+      <li nz-menu-item *ngFor="let item of done">
+        {{ item }}
+        <a *ngIf="!isTeacher" (click)="infoModal.showModal()"><i nz-icon [nzType]="'eye'" [nzTheme]="'outline'"></i></a>
+        <div *ngIf="isTeacher" class="teacher">
+          <a (click)="editTask.showModal()"><i nz-icon [nzType]="'edit'" [nzTheme]="'outline'"></i></a>
+          <a style="width: 10px"></a>
+          <a (click)="showConfirm()"><i nz-icon [nzType]="'delete'" [nzTheme]="'outline'"></i></a>
+        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
