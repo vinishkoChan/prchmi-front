@@ -41,7 +41,8 @@ export class AuthComponent implements OnInit {
   }
 
   onSubmit(form: IAuthData): void {
-    this.store.dispatch(login({ login: form.email, password: form.password }));
+    localStorage.setItem('role', `${form.email}`);
+    this.router.navigateByUrl('/home');
   }
 
   setSignIn() {

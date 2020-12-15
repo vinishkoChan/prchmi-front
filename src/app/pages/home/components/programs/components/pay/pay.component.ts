@@ -1,41 +1,35 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, ValidationErrors, Validators } from '@angular/forms';
+import { FormGroup, FormControl, ValidationErrors, FormBuilder, Validators } from '@angular/forms';
 import { Observable, Observer } from 'rxjs';
 import { IProgram } from 'src/app/shared/interfaces/program.interface';
 import { ProgramService } from 'src/app/shared/services/program.service';
 
 @Component({
-  selector: 'app-add-program-modal',
-  templateUrl: './add-program-modal.component.html',
-  styleUrls: ['./add-program-modal.component.css'],
+  selector: 'app-pay',
+  templateUrl: './pay.component.html',
+  styleUrls: ['./pay.component.css'],
 })
-export class AddProgramModalComponent implements OnInit {
+export class PayComponent implements OnInit {
   isVisible = false;
   isOkLoading = false;
   geniralInfoGroup: FormGroup;
   localstorage = localStorage;
-  @Input() isEdit = false;
-  title = 'New Program';
+  title = 'New Payment';
   pt: string;
-  isTeacher: boolean;
+  prog: IProgram;
 
   validateForm: FormGroup;
 
   submitForm(value: { lang: string; progTitle: string; stud: string }): void {
-    for (const key in this.validateForm.controls) {
-      this.validateForm.controls[key].markAsDirty();
-      this.validateForm.controls[key].updateValueAndValidity();
-    }
-    const data: IProgram = {
-      name: value.progTitle,
-      language: value.lang,
-      student: value.stud,
-      teacherId: 'Teacher',
-      created_at: new Date().toLocaleDateString(),
+    this.validateForm.markAsDirty();
+    this.validateForm.updateValueAndValidity();
+    const data = {
+      program: this.pt,
+      student: localStorage.getItem('role'),
+      payment: value.lang,
+      date: new Date().toLocaleDateString(),
     };
-    if (this.isEdit) {
-      this.programService.editProgram(this.pt, data);
-    } else this.programService.addProgram(data);
+    this.programService.addPayment(data);
   }
 
   resetForm(): void {
@@ -72,22 +66,16 @@ export class AddProgramModalComponent implements OnInit {
     this.validateForm = this.fb.group({
       progTitle: ['', [Validators.required], [this.userNameAsyncValidator]],
       lang: ['', [Validators.required]],
-      stud: ['', [Validators.required]],
     });
   }
-  ngOnInit(): void {
-    this.title = this.isEdit ? 'Edit Program' : this.title;
-    this.isTeacher = localStorage.getItem('role') === 'teacher';
-  }
+  ngOnInit(): void {}
 
   showModal(data?: IProgram): void {
+    this.prog = data;
     this.isVisible = true;
-    if (this.isEdit) {
-      this.validateForm.controls['lang'].setValue(data.language);
-      this.validateForm.controls['progTitle'].setValue(data.name);
-      this.validateForm.controls['stud'].setValue(data.student);
-      this.pt = data.name;
-    }
+    this.validateForm.controls['progTitle'].setValue(data.name);
+    this.validateForm.controls['progTitle'].disable();
+    this.pt = data.name;
   }
 
   handleOk(value: { lang: string; progTitle: string; stud: string }): void {

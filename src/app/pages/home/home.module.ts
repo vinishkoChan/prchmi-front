@@ -18,6 +18,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { AddTaskModalComponent } from './components/tasks/components/add-task-modal/add-task-modal.component';
 import { InfoTaskModalComponent } from './components/tasks/components/info-task-modal/info-task-modal.component';
+import { PayComponent } from './components/programs/components/pay/pay.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { InfoTaskModalComponent } from './components/tasks/components/info-task-
     AddProgramModalComponent,
     AddTaskModalComponent,
     InfoTaskModalComponent,
+    PayComponent,
   ],
   imports: [
     CommonModule,

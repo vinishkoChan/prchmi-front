@@ -1,8 +1,3 @@
-<button *ngIf="!isEdit && isTeacher" nz-button nzType="primary" (click)="showModal()">
-  <i nz-icon nzType="plus"></i>
-  <span> New program</span>
-</button>
-
 <nz-modal
   [(nzVisible)]="isVisible"
   [nzTitle]="title"
@@ -23,20 +18,11 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSpan]="7" nzRequired>Language</nz-form-label>
+      <nz-form-label [nzSpan]="7" nzRequired>Amount</nz-form-label>
       <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="langErrorTpl">
-        <input nz-input formControlName="lang" placeholder="Language" />
+        <input nz-input formControlName="lang" placeholder="Payment" />
         <ng-template #langErrorTpl let-control>
-          <ng-container *ngIf="control.hasError('required')"> Please input program language! </ng-container>
-        </ng-template>
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label [nzSpan]="7" nzRequired>Student</nz-form-label>
-      <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="studErrorTpl">
-        <input nz-input formControlName="stud" placeholder="Select student" />
-        <ng-template #studErrorTpl let-control>
-          <ng-container *ngIf="control.hasError('required')"> Please input student name! </ng-container>
+          <ng-container *ngIf="control.hasError('required')"> Please input amount of payment! </ng-container>
         </ng-template>
       </nz-form-control>
     </nz-form-item>

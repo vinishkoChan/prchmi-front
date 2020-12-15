@@ -23,26 +23,34 @@
       </div>
       <div
         style="
-          width: 500px;
+          width: 700px;
           height: 300px;
           padding: 25px;
           border-radius: 5px;
           border: 2px solid red;
           display: flex;
-          justify-content: center;
+          justify-content: flex-start;
           align-items: center;
           flex-direction: column;
         "
       >
-        <div *ngFor="let data of payments" style="display: flex">
-          <span> student: {{ data.student }}; </span>
-          <p></p>
-          <span> date: {{ data.date }}; </span>
-          <span> </span>
-          <span> program: {{ data.program }}; </span>
-          <span> </span>
-          <span> cost: {{ data.cost }}; </span>
-        </div>
+        <nz-table #programList nzTableLayout="fixed" class="program-table">
+          <thead class="program-table-head">
+            <tr>
+              <th *ngFor="let column of columns" [nzSortOrder]="column.sortOrder" [nzSortFn]="column.sortFn">
+                {{ column.name }}
+              </th>
+            </tr>
+          </thead>
+          <tbody class="program-table-body">
+            <tr *ngFor="let data of payments | async">
+              <td>{{ data.student }}</td>
+              <td>{{ data.date }}</td>
+              <td>{{ data.program }}</td>
+              <td>{{ data.payment }}$</td>
+            </tr>
+          </tbody>
+        </nz-table>
       </div>
     </nz-content>
   </nz-layout>

@@ -12,7 +12,5 @@ export class AppComponent implements OnInit {
     } else {
       localStorage.setItem('view', 'desktop');
     }
-
-    localStorage.setItem('role', 'teacher');
   }
 }

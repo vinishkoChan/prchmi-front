@@ -1,5 +1,6 @@
 <div class="container">
   <app-add-program-modal #editProgram [isEdit]="true"></app-add-program-modal>
+  <app-pay #pay></app-pay>
 
   <div class="show-modal">
     <app-add-program-modal></app-add-program-modal>
@@ -10,20 +11,23 @@
         <th *ngFor="let column of columns" [nzSortOrder]="column.sortOrder" [nzSortFn]="column.sortFn">
           {{ column.name }}
         </th>
-        <th *ngIf="isTeacher" class="action">Action</th>
+        <th class="action">Action</th>
       </tr>
     </thead>
     <tbody class="program-table-body">
       <tr *ngFor="let program of programs | async">
-        <td>{{ program.student }}</td>
+        <td>{{ isTeacher ? program.student : program.teacherId }}</td>
         <td>{{ program.name }}</td>
         <td>{{ program.language }}</td>
         <td>{{ program.created_at }}</td>
-        <td *ngIf="isTeacher" class="action">
+        <td class="action">
           <div class="teacher" *ngIf="isTeacher">
             <a (click)="editProgram.showModal(program)"><i nz-icon [nzType]="'edit'" [nzTheme]="'outline'"></i></a>
             <a style="width: 10px"></a>
             <a (click)="showConfirm(program.name)"><i nz-icon [nzType]="'delete'" [nzTheme]="'outline'"></i></a>
+          </div>
+          <div *ngIf="!isTeacher">
+            <a (click)="pay.showModal(program)"><i nz-icon [nzType]="'dollar'" [nzTheme]="'outline'"></i></a>
           </div>
         </td>
       </tr>

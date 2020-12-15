@@ -1,6 +1,7 @@
 export interface IProgram {
-  teacherId: number;
+  teacherId: string;
   student: string;
   language: string;
   name: string;
+  created_at: string;
 }

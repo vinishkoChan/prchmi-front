@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzTableSortOrder, NzTableSortFn } from 'ng-zorro-antd/table';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/internal/operators/map';
 import { IProgram } from 'src/app/shared/interfaces/program.interface';
 import { ProgramService } from 'src/app/shared/services/program.service';
 
@@ -74,8 +75,10 @@ export class ProgramsComponent implements OnInit {
   //   },
   // ];
   programs: Observable<IProgram[]>;
+  payments: Observable<any[]>;
 
   isTeacher = true;
+  name: string;
   isMobile = false;
 
   constructor(private router: Router, private modal: NzModalService, private programsService: ProgramService) {}
@@ -90,11 +93,17 @@ export class ProgramsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const name = localStorage.getItem('role');
     this.isTeacher = localStorage.getItem('role') === 'teacher';
+    this.name = localStorage.getItem('role');
     this.columns[0].name = this.isTeacher ? 'Student' : 'Teacher';
 
     this.isMobile = localStorage.getItem('view') === 'mobile';
 
-    this.programs = this.programsService.$programs;
+    this.programs = this.programsService.programs$.pipe(
+      map((payments) => {
+        return name === 'teacher' ? payments : payments.filter((element) => element.student === name);
+      }),
+    );
   }
 }

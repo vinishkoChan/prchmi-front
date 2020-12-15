@@ -60,3 +60,30 @@ ul > li > span {
 .ant-layout-sider-children {
   width: 100% !important;
 }
+.program-table {
+  margin: 5px;
+}
+.program-table-body {
+  background-color: #4c036e;
+}
+
+.program-table-body tr td {
+  border-color: #7608aa;
+  border-bottom-width: 3px;
+
+  font-size: 16px;
+}
+
+.program-table-head {
+  background-color: #4c036e;
+  background: none;
+
+  border-color: #4c036e;
+}
+
+th {
+  font-size: 20px;
+}
+::ng-deep .ant-table-placeholder {
+  display: none;
+}
